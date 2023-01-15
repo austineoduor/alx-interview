@@ -8,6 +8,7 @@ write a method that calculates the fewest number of operations
 needed to result in exactly n H characters in the file.
 '''
 
+
 def minOperations(n):
     '''
     returns the fewest number of needed operations or 0
@@ -15,6 +16,7 @@ def minOperations(n):
     if not isinstance(n, int) or n < 2:
         return 0
     return factorization(n)
+
 
 def factorization(n):
     '''
