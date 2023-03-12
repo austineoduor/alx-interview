@@ -1,46 +1,31 @@
 #!/usr/bin/python3
-""" prime game """
-
-
-def isPrime(x):
-    """ checks if a number is prime """
-    for i in range(2, x):
-        if x % i == 0:
-            return False
-    return True
+""" Prime Game """
 
 
 def isWinner(x, nums):
-    """ prime game """
-    if x < 1 or not nums or nums == []:
+    """ Maria and Ben are playing a game """
+    if not nums or x < 1:
         return None
-    r = min(x, len(nums))
-    Maria = 0
-    Ben = 0
-    player = 0
-    for r_i in range(r):
-        if nums[r_i] < 2:
-            Ben += 1
-        elif nums[r_i] == 2:
-            Maria += 1
-        else:
-            player = True
-            prime_exist = 1
-            n = list(range(2, nums[r_i] + 1))
-            while (prime_exist):
-                prime_exist = 0
-                for i in n:
-                    if (isPrime(i)):
-                        prime_exist = 1
-                        player = not player
-                        n = list(filter(lambda x: x % i != 0, n))
-            if (player):
-                Ben += 1
-            else:
-                Maria += 1
+    n = max(nums)
+    K = [True for _ in range(max(n + 1, 2))]
+    for i in range(2, int(n**0.5) + 1):
+        if not K[i]:
+            continue
+        for j in range(i*i, n + 1, i):
+            K[j] = False
 
-    if Maria > Ben:
-        return 'Maria'
-    elif Ben > Maria:
-        return 'Ben'
-    return None
+    K[0] = K[1] = False
+    c = 0
+    for i in range(len(K)):
+        if K[i]:
+            c += 1
+        K[i] = c
+
+    P = 0
+    for n in nums:
+        P += K[n] % 2 == 1
+    if P * 2 == len(nums):
+        return None
+    if P * 2 > len(nums):
+        return "Maria"
+    return "Ben"
